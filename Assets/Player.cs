@@ -4,17 +4,19 @@ public class Player : MonoBehaviour
 {
     public float velocidad = 5f;
     public float rangoInteraccion = 2f;
+    private Enemy masCercano;
+
 
     void Update()
     {
         float movimientoX = 0f;
 
-        if (Input.GetKey(KeyCode.D)) 
+        if (Input.GetKey(KeyCode.D))
         {
             movimientoX = 1f;
         }
-        else if (Input.GetKey(KeyCode.A)) 
-        {   
+        else if (Input.GetKey(KeyCode.A))
+        {
             movimientoX = -1f;
         }
 
@@ -24,12 +26,16 @@ public class Player : MonoBehaviour
         {
             NearestEnemy();
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            KillEnemy();
+        }
     }
 
     void NearestEnemy()
     {
         Enemy[] enemigos = FindObjectsOfType<Enemy>();
-        Enemy masCercano = null;
+     
         float menorDistancia = Mathf.Infinity;
 
         foreach (Enemy enemigo in enemigos)
@@ -51,6 +57,20 @@ public class Player : MonoBehaviour
             Debug.Log("No hay enemigos cerca para interactuar.");
         }
     }
-}
+        void KillEnemy()
+        {
+        if (Input.GetKeyDown(KeyCode.E) && masCercano != null && masCercano.vida > 0)
+        {
+            Debug.Log("Atacando a " + masCercano.name);
+            masCercano.TakeDamage(1);
+            }
+        }
+    }
+
+      
+ 
+
+       
+
     
 
